@@ -6,16 +6,13 @@ dotenv.config();
 const anthropic = new Anthropic();
 
 async function main() {
-    const msg = await anthropic.messages.create({
-        model: "claude-3-7-sonnet-20250219",
-        max_tokens: 20000,
-        temperature: 1,
-        messages: [{
-            role: "user",
-            content: "What is 2 + 2"
-        }]
-    });
-    console.log(msg);
+    anthropic.messages.stream({
+    messages: [{role: 'user', content: "Create a simple todo app"}],
+    model: 'claude-3-7-sonnet-20250219',
+    max_tokens: 1024,
+}).on('text', (text) => {
+    console.log(text);
+});
 }
 
 main();
