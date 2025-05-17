@@ -50,6 +50,23 @@ app.post("/template", async (req, res) => {
 
 })
 
+app.post("/chat",async (req, res)=> {
+
+    const messages = req.body.messages;
+
+    const response = await anthropic.messages.create({
+        messages: messages,
+        model: 'claude-3-7-sonnet-20250219',
+        max_tokens: 20000,
+        system: getSystemPrompt()
+    });
+
+    console.log(response);
+
+    res.json({});
+} )
+
+
 app.listen(3000, ()=> {
     console.log("Server is running on 3000")
 })
